@@ -2,8 +2,10 @@
 
 A structured collection of my **Data Structures & Algorithms practice** in C++, covering LeetCode and competitive programming problems.
 
-> 📅 **Progress tracking starts from 26 August 2026.**  
-> Practice and progress from before this date are not included.
+<li>📅 Progress tracking starts from <b>26 August 2026.</b> </li>
+<li>Practice and progress from before this date are not included.</li>
+
+
 
 ## 👨‍💻 Profiles
 
