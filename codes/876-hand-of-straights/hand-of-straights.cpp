@@ -3,42 +3,36 @@ public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
         int n = hand.size();
 
+        // Total cards must be divisible by groupSize
         if (n % groupSize != 0) {
             return false;
         }
 
-        unordered_map<int, int> freq;
+        // Count the frequency of each card in sorted order
+        map<int, int> mp;
 
-        // Count frequencies
         for (int card : hand) {
-            freq[card]++;
+            mp[card]++;
         }
 
-        // Min-heap to process the smallest card first
-        priority_queue<int, vector<int>, greater<int>> pq;
+        // Start groups from the smallest available card
+        for (auto it = mp.begin(); it != mp.end(); it++) {
+            if (it->second == 0) {
+                continue;
+            }
 
-        for (auto& p : freq) {
-            pq.push(p.first);
-        }
+            int start = it->first;
+            int count = it->second;
 
-        while (!pq.empty()) {
-            int start = pq.top();
-
-            // Form a group of consecutive cards
+            // Form groups of consecutive cards
             for (int i = 0; i < groupSize; i++) {
                 int card = start + i;
 
-                // Required card is missing or already used
-                if (freq[card] == 0) {
+                if (mp[card] < count) {
                     return false;
                 }
 
-                freq[card]--;
-                
-                // Remove exhausted cards from the heap
-                if (freq[card] == 0 && card == pq.top()) {
-                    pq.pop();
-                }
+                mp[card] -= count;
             }
         }
 
