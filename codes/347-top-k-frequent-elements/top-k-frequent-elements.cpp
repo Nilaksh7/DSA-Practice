@@ -1,31 +1,25 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        // Count frequency of every number
-        unordered_map<int, int> freq;
-
-        for (int num : nums) {
+        unordered_map<int,int> freq;//el,freq
+        for(int num : nums){
             freq[num]++;
         }
 
-        // bucket[i] contains numbers that appear exactly i times
-        vector<vector<int>> bucket(nums.size() + 1);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;//min-heap //freq,el
 
-        for (auto& [num, count] : freq) {
-            bucket[count].push_back(num);
+        for(auto& it : freq){
+            int el = it.first;
+            int f = it.second;
+
+            pq.push({it.second,it.first});
+            if(pq.size() > k) pq.pop();
         }
 
         vector<int> ans;
-
-        // Start from highest frequency
-        for (int i = nums.size(); i >= 1 && ans.size() < k; i--) {
-
-            for (int num : bucket[i]) {
-                ans.push_back(num);
-
-                if (ans.size() == k)
-                    break;
-            }
+        while(!pq.empty()){
+            ans.push_back(pq.top().second);
+            pq.pop();
         }
 
         return ans;
